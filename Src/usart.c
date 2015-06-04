@@ -93,8 +93,10 @@ void MX_USART2_UART_Init(void)
   huart2.Init.Mode = UART_MODE_TX_RX;
   huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
   huart2.Init.OverSampling = UART_OVERSAMPLING_16;
+	
   HAL_UART_Init(&huart2);
-
+	__HAL_UART_ENABLE_IT(&huart2,UART_IT_RXNE);
+	
 }
 
 
@@ -114,7 +116,7 @@ void MX_USART2_UART_Init(void)
 
 void USART2_Reconfig(uint8_t *settings)
 {
-	uint32_t stopBits, parity;
+	uint32_t stopBits, parity, wLength;
 	uint32_t baudRate = settings[3];
 	baudRate<<=8;
 	baudRate |= settings[2];
@@ -147,9 +149,24 @@ void USART2_Reconfig(uint8_t *settings)
 			break;
 	}
 	
+	switch(settings[6])
+	{
+		case 8:
+			wLength = UART_WORDLENGTH_8B;
+			break;
+		
+		case 9:
+			wLength = UART_WORDLENGTH_9B;
+		
+		default:
+			wLength = UART_WORDLENGTH_8B;	
+	}
+
+	
+	
 	huart2.Instance = USART2;
   huart2.Init.BaudRate = baudRate;
-  huart2.Init.WordLength = UART_WORDLENGTH_8B;
+  huart2.Init.WordLength = wLength;
   huart2.Init.StopBits = stopBits;
   huart2.Init.Parity = parity;
   huart2.Init.Mode = UART_MODE_TX_RX;

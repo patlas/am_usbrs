@@ -197,6 +197,7 @@ static int8_t CDC_Control_FS  (uint8_t cmd, uint8_t* pbuf, uint16_t length)
   /*******************************************************************************/
   case CDC_SET_LINE_CODING:   
 	
+		printf("Zawartosc bufora: %d %d %d", pbuf[4],pbuf[5],pbuf[6]);
 		USART2_Reconfig(pbuf);
     break;
 

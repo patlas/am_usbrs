@@ -463,6 +463,11 @@
               <FileType>1</FileType>
               <FilePath>..\Src\ring_buffer.c</FilePath>
             </File>
+            <File>
+              <FileName>hardFaultC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\hardFaultC.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

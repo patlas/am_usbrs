@@ -53,7 +53,13 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_DMA_Init(void);
 
-
+#define DEBUG
+#ifdef DEBUG
+	int fputc(int c, FILE *stream)
+	{
+		 return(ITM_SendChar(c));
+	}
+#endif
 
 
 int main(void)
@@ -83,7 +89,15 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+	
+	HAL_GPIO_WritePin(GPIOD,GPIO_PIN_13,GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOD,GPIO_PIN_14,GPIO_PIN_RESET);
 	char x;
+	
+	/* Enabling exception for debugging*/
+	SCB->CCR |= (1<<4) | (1<<3);
+	SCB->SHCSR |= 0x00070000;
+	
   while (1)
   {
   /* USER CODE END WHILE */
@@ -213,3 +227,49 @@ void assert_failed(uint8_t* file, uint32_t line)
 */ 
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+
+
+
+
+/*void HardFault_Handler(void){
+	
+	HAL_GPIO_WritePin(GPIOD,GPIO_PIN_12,GPIO_PIN_SET);
+	
+	
+}*/
+
+
+//__asm  void HardFault_Handler(void)
+//{
+//			tst lr, #4                                                
+//			ite eq                                                    
+//			mrseq r0, msp                                             
+//			mrsne r0, psp                                             
+//			ldr r1, [r0, #24]                                         
+//			ldr r2, handler2_address_const                            
+//			bx r2                                                     
+//handler2_address_const 
+//.word hard_fault_handler_c    
+//ENDP  
+//}
+void hard_fault_handler_c (unsigned int * hardfault_args);
+
+
+//__asm void HardFault_Handler(void)
+//{
+//   TST lr, #4
+//   ITE EQ
+//   MRSEQ r0, MSP
+//   MRSNE r0, PSP
+//   B __cpp(hard_fault_handler_c)
+//}
+
+//__asm void HardFault_Handler(void)
+//{
+//	IMPORT hard_fault_handler_c
+//	TST LR, #4
+//	ITE EQ
+//	MRSEQ R0, MSP
+//	MRSNE R0, PSP
+//	B hard_fault_handler_c
+//}

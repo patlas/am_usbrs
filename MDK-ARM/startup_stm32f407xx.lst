@@ -100,23 +100,23 @@ ARM Macro Assembler    Page 2
    56 00000400         ;   <o>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
    57 00000400         ; </h>
    58 00000400         
-   59 00000400 00000300 
+   59 00000400 00000400 
                        Heap_Size
-                               EQU              0x00000300
+                               EQU              0x00000400
    60 00000400         
    61 00000400                 AREA             HEAP, NOINIT, READWRITE, ALIGN=
 3
    62 00000000         __heap_base
    63 00000000         Heap_Mem
                                SPACE            Heap_Size
-   64 00000300         __heap_limit
-   65 00000300         
-   66 00000300                 PRESERVE8
-   67 00000300                 THUMB
-   68 00000300         
-   69 00000300         
-   70 00000300         ; Vector Table Mapped to Address 0 at Reset
-   71 00000300                 AREA             RESET, DATA, READONLY
+   64 00000400         __heap_limit
+   65 00000400         
+   66 00000400                 PRESERVE8
+   67 00000400                 THUMB
+   68 00000400         
+   69 00000400         
+   70 00000400         ; Vector Table Mapped to Address 0 at Reset
+   71 00000400                 AREA             RESET, DATA, READONLY
    72 00000000                 EXPORT           __Vectors
    73 00000000                 EXPORT           __Vectors_End
    74 00000000                 EXPORT           __Vectors_Size
@@ -870,11 +870,11 @@ ARM Macro Assembler    Page 14
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
 erwork --depend="test configuration\startup_stm32f407xx.d" -o"test configuratio
-n\startup_stm32f407xx.o" -IF:\Repositories\AM\test\am_usbrs\MDK-ARM\RTE -IC:\Ke
-il_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.4.0 -IC:\Keil_v5\ARM\CMSIS\Include --predef
-ine="__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERS
-ION SETA 514" --predefine="STM32F407xx SETA 1" --list=startup_stm32f407xx.lst .
-.\Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f407xx.s
+n\startup_stm32f407xx.o" -IF:\Repositories\AM\am_usbrs\MDK-ARM\RTE -IC:\Keil_v5
+\ARM\PACK\Keil\STM32F4xx_DFP\2.4.0 -IC:\Keil_v5\ARM\CMSIS\Include --predefine="
+__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION S
+ETA 514" --predefine="STM32F407xx SETA 1" --list=startup_stm32f407xx.lst ..\Dri
+vers\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f407xx.s
 
 
 
@@ -946,7 +946,7 @@ arm\startup_stm32f407xx.s
       At line 418 in file ..\Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates
 \arm\startup_stm32f407xx.s
 Comment: __heap_base used once
-__heap_limit 00000300
+__heap_limit 00000400
 
 Symbol: __heap_limit
    Definitions
@@ -2228,7 +2228,7 @@ arm\startup_stm32f407xx.s
 ARM Macro Assembler    Page 1 Alphabetic symbol ordering
 Absolute symbols
 
-Heap_Size 00000300
+Heap_Size 00000400
 
 Symbol: Heap_Size
    Definitions
